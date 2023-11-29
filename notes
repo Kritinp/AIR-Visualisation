@@ -1,0 +1,9 @@
+Topology ---
+window completeness(aggregator)
+events/sec
+buffer utilization ---
+
+Show one dataflow and corresp info on the side
+utilize other charts to generalize information
+
+*GDB (debugging tools for MPI programs)
