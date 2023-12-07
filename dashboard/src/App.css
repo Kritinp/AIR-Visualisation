@@ -159,6 +159,13 @@ body {
   background-color: #d50000;
 }
 
+.dataflow{
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+  grid-template-columns: 1fr 1fr;
+}
+
 .card-inner {
   display: flex;
   align-items: center;
@@ -169,6 +176,15 @@ body {
   font-size: 25px;
 }
 
+.vertexInfo{
+  font-size: 30px;
+  line-height: '1.5';
+  white-space: 'pre-wrap';
+  word-break: break-all;
+  overflow-wrap: break-word;
+  padding: '0px';
+}
+
 .charts {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -176,6 +192,7 @@ body {
   margin-top: 60px;
   height: 300px;
 }
+
 
 /* End Main  */
 

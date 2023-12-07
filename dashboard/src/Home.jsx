@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { BsFillArchiveFill,BsFillAspectRatioFill,BsFillArrowRightSquareFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill } from 'react-icons/bs';
+import  graph from "./assets/graph.png"
 
 function generateFileNames(n) {
   const fileNames = [];
@@ -13,12 +14,22 @@ function generateFileNames(n) {
   return fileNames;
 }
 
+function removeDuplicates(text) {
+  const lines = text.split('\n');
+  const uniqueLines = Array.from(new Set(lines));
+  return uniqueLines.join('\n');
+}
+
+
 function Home() {
+  
   const [fileData, setFileData] = useState({});
   const [count, setCount] = useState('');
   const [dataflowsCount, setDataflowsCount] = useState(0);
   const [completedWindows, setCompletedWindows] = useState('');
   const [throughput, setThroughput] = useState('');
+  const [verticesText, setVerticesText] = useState('');
+
 
   const fetchData = async () => {
     try {
@@ -40,6 +51,8 @@ function Home() {
       const throughputValue = throughputText.trim().split('\n').slice(-1);
 
       const fileNames = generateFileNames(0);
+      
+
 
       const fetchDataPromises = fileNames.map(async (filePath) => {
         try {
@@ -99,6 +112,21 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const fetchVertices = async () => {
+      try {
+        const response = await fetch('src/general/vertices.txt'); // Update the path as needed
+        const text = await response.text();
+        const uniqueText = removeDuplicates(text);
+        setVerticesText(uniqueText);
+      } catch (error) {
+        console.error('Error fetching vertices data:', error);
+      }
+    };
+
+    fetchVertices();
+  }, []);
+
   const renderBarCharts = () => {
     return Object.entries(fileData).map(([fileNumber, data], index) => {
       const inBars = data.filter(file => file.fileName.includes('_In'));
@@ -155,32 +183,44 @@ function Home() {
                   <BsFillArrowRightSquareFill className='card_icon'/>
               </div>
               <h1>{dataflowsCount}</h1>
+        </div>
+        <div className='card'>
+            <div className='card-inner'>
+                <h3>Matches Count</h3>
+                <BsFillGrid3X3GapFill className='card_icon'/>
+            </div>
+            <h1>{count}</h1>
+        </div>
+        <div className='card'>
+            <div className='card-inner'>
+                <h3>Completed Windows</h3>
+                <BsFillAspectRatioFill className='card_icon'/>
+            </div>
+            <h1>{completedWindows}</h1>
+        </div>
+        <div className='card'>
+            <div className='card-inner'>
+                <h3>Throughput</h3>
+                <BsFillBellFill className='card_icon'/>
+            </div>
+            <h1>{throughput}</h1>
+        </div>
+    </div>
+    {/* <div className='dataflow'>
+          <div>
+            <h3>Dataflow Representation</h3>
+            <img src={graph} />
           </div>
-          <div className='card'>
-              <div className='card-inner'>
-                  <h3>Matches Count</h3>
-                  <BsFillGrid3X3GapFill className='card_icon'/>
-              </div>
-              <h1>{count}</h1>
+          <div>
+            <h3>Vertices</h3>
+            <pre style = {{border: '1.5px solid #ccc', 
+            borderRadius:'15px'}} className='vertexInfo'>
+              {verticesText}</pre>
           </div>
-          <div className='card'>
-              <div className='card-inner'>
-                  <h3>Completed Windows</h3>
-                  <BsFillAspectRatioFill className='card_icon'/>
-              </div>
-              <h1>{completedWindows}</h1>
-          </div>
-          <div className='card'>
-              <div className='card-inner'>
-                  <h3>Throughput</h3>
-                  <BsFillBellFill className='card_icon'/>
-              </div>
-              <h1>{throughput}</h1>
-          </div>
-      </div>
+    </div> */}
 
-      {renderBarCharts()}
-    </main>
+    {renderBarCharts()}
+  </main>
   );
 }
 
