@@ -39,7 +39,7 @@ function Home() {
       const throughputText = await throughputResponse.text();
       const throughputValue = throughputText.trim().split('\n').slice(-1);
 
-      const fileNames = generateFileNames(n-1);
+      const fileNames = generateFileNames(0);
 
       const fetchDataPromises = fileNames.map(async (filePath) => {
         try {
