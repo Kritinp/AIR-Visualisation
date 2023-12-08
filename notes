@@ -7,3 +7,9 @@ Show one dataflow and corresp info on the side
 utilize other charts to generalize information
 
 *GDB (debugging tools for MPI programs)
+-------------------------------------------
+turn loggin off and on
+check latency
+purge old data----
+implement classes and make logging more generic
+

@@ -50,7 +50,7 @@ function Home() {
       const throughputText = await throughputResponse.text();
       const throughputValue = throughputText.trim().split('\n').slice(-1);
 
-      const fileNames = generateFileNames(0);
+      const fileNames = generateFileNames(n-1);
       
 
 
@@ -206,7 +206,7 @@ function Home() {
             <h1>{throughput}</h1>
         </div>
     </div>
-    {/* <div className='dataflow'>
+    <div className='dataflow'>
           <div>
             <h3>Dataflow Representation</h3>
             <img src={graph} />
@@ -217,7 +217,7 @@ function Home() {
             borderRadius:'15px'}} className='vertexInfo'>
               {verticesText}</pre>
           </div>
-    </div> */}
+    </div>
 
     {renderBarCharts()}
   </main>
